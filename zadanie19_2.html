@@ -1,10 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Walidacja hasła</title>
+    <script>
+        function validatePassword() {
+            var password = document.getElementById("password").value;
+            var confirmPassword = document.getElementById("confirmPassword").value;
+
+            if (password.length < 8) {
+                alert("Hasło powinno zawierać minimum 8 znaków.");
+                return false;
+            }
+
+            if (password !== confirmPassword) {
+                alert("Hasło i powtórzone hasło nie są takie same.");
+                return false;
+            }
+            var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/;
+            if (!passwordRegex.test(password)) {
+                alert("Hasło powinno zawierać przynajmniej jedną dużą literę, jedną małą literę, jeden znak specjalny i cyfrę.");
+                return false;
+            }
+
+            alert("Hasło spełnia wszystkie wymagania.");
+            return true;
+        }
+    </script>
 </head>
 <body>
+<h1>Walidacja hasła</h1>
+<form onsubmit="return validatePassword()">
+    <label for="password">Hasło:</label>
+    <input type="password" id="password" required><br><br>
 
+    <label for="confirmPassword">Powtórz hasło:</label>
+    <input type="password" id="confirmPassword" required><br><br>
+
+    <input type="submit" value="Sprawdź hasło">
+</form>
 </body>
 </html>
