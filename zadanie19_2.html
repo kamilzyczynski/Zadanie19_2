@@ -1,10 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Walidacja hasła</title>
+    <script>
+        function validatePassword() {
+            var password = document.getElementById("password").value;
+            var confirmPassword = document.getElementById("confirmPassword").value;
+            var messageContainer = document.getElementById("messageContainer");
+
+            messageContainer.innerHTML = "";
+
+            if (password.length < 8) {
+                messageContainer.innerHTML += "<p>Hasło powinno zawierać minimum 8 znaków.</p>";
+            }
+
+            if (password !== confirmPassword) {
+                messageContainer.innerHTML += "<p>Hasło i powtórzone hasło nie są takie same.</p>";
+            }
+            var passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/;
+            if (!passwordRegex.test(password)) {
+                messageContainer.innerHTML += "<p>Hasło powinno zawierać przynajmniej jedną dużą literę, jedną małą literę, jeden znak specjalny i cyfrę.</p>";
+            }
+
+            if (messageContainer.innerHTML === "") {
+                messageContainer.innerHTML = "<p>Hasło spełnia wszystkie wymagania.</p>";
+                return true;
+            } else {
+                return false;
+            }
+        }
+    </script>
 </head>
 <body>
+<h1>Walidacja hasła</h1>
+<form onsubmit="return validatePassword()">
+    <label for="password">Hasło:</label>
+    <input type="password" id="password" required onkeyup="validatePassword()"><br><br>
 
+    <label for="confirmPassword">Powtórz hasło:</label>
+    <input type="password" id="confirmPassword" required><br><br>
+
+    <input type="submit" value="Sprawdź hasło">
+</form>
+<div id="messageContainer"></div>
 </body>
 </html>
